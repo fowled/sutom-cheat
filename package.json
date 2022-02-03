@@ -7,7 +7,7 @@
 	"license": "MIT",
 	"private": true,
 	"scripts": {
-		"start": "yarn run nodemon"
+		"start": "yarn run nodemon src/index.ts"
 	},
 	"dependencies": {
 		"dotenv": "^16.0.0",
