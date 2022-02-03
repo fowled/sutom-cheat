@@ -1,0 +1,26 @@
+{
+	"name": "sutom",
+	"version": "1.0.0",
+	"description": "A Twitter bot made to post SUTOM's answers, every day",
+	"main": "out/index.js",
+	"author": "fowled",
+	"license": "MIT",
+	"private": true,
+	"scripts": {
+		"start": "yarn run nodemon"
+	},
+	"dependencies": {
+		"dotenv": "^16.0.0",
+		"node-cron": "^3.0.0",
+		"node-fetch": "2",
+		"twitter-api-v2": "^1.10.0"
+	},
+	"devDependencies": {
+		"@types/node": "*",
+		"@types/node-cron": "^3.0.1",
+		"@types/node-fetch": "2",
+		"nodemon": "^2.0.15",
+		"ts-node": "^10.4.0",
+		"typescript": "^4.5.5"
+	}
+}
