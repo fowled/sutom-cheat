@@ -25,7 +25,8 @@ cron.schedule("0 0 * * *", async function () {
     const differenceInDays: number = differenceInTime / (1000 * 3600 * 24);
 
     const wordOfTheDay: string = await (await fetch(`https://sutom.nocle.fr/mots/${Math.trunc(differenceInDays)}.txt`)).text();
-    const wordOfTomorrow: string = await (await fetch(`https://sutom.nocle.fr/mots/${Math.trunc(differenceInDays + 1)}.txt`)).text();
     
-    Client.v2.tweet(`🔍 Le mot du jour est: ${wordOfTheDay}.\n⚡ Le mot de demain sera ${wordOfTomorrow}. #SUTOM`);
+    await Client.v2.tweet(`👋 Hey! Le mot du jour au SUTOM est disponible en réponse (attention, spoil) ⬇️ #SUTOM`).then(tweet => {
+        Client.v2.reply(`🔍 Le mot du jour est: ${wordOfTheDay}.`, tweet.data.id);
+    });
 });
