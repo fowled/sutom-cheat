@@ -6,27 +6,24 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const Client = new TwitterAPI({
-    // @ts-ignore
-    appKey: process.env.API_KEY,
-    appSecret: process.env.API_SECRET,
-    accessToken: process.env.ACCESS_TOKEN,
-    accessSecret: process.env.ACCESS_SECRET
+	// @ts-ignore
+	appKey: process.env.API_KEY,
+	appSecret: process.env.API_SECRET,
+	accessToken: process.env.ACCESS_TOKEN,
+	accessSecret: process.env.ACCESS_SECRET,
 });
 
-Client.v2.me().then(data => {
-    console.log(data);
+Client.v2.me().then((data) => {
+	console.log(data);
 });
 
 cron.schedule("0 0 * * *", async function () {
-    const creationDate: Date = new Date("01/07/2022");
-    const todaysDate: Date = new Date();
+	const idPartie = process.env.ID_PARTIE;
+	const datePartie = new Date();
 
-    const differenceInTime: number = todaysDate.getTime() - creationDate.getTime();
-    const differenceInDays: number = differenceInTime / (1000 * 3600 * 24);
+	const wordOfTheDay: string = await (await fetch(`https://sutom.nocle.fr/mots/${Buffer.from(`${idPartie}-${datePartie.toISOString().split("T")[0]}`).toString("base64")}.txt`)).text();
 
-    const wordOfTheDay: string = await (await fetch(`https://sutom.nocle.fr/mots/${Math.trunc(differenceInDays)}.txt`)).text();
-    
-    await Client.v2.tweet(`👋 Hey! Le mot du jour au SUTOM est disponible en réponse (attention, spoil) ⬇️ #SUTOM`).then(tweet => {
-        Client.v2.reply(`🔍 Le mot du jour est: ${wordOfTheDay}.`, tweet.data.id);
-    });
+	await Client.v2.tweet(`👋 Hey! Le mot du jour au SUTOM est disponible en réponse (attention, spoil) ⬇️ #SUTOM`).then((tweet) => {
+		Client.v2.reply(`🔍 Le mot du jour est: ${wordOfTheDay}.`, tweet.data.id);
+	});
 });
